@@ -6,14 +6,14 @@
 #   make dev-docker
 
 # ── Stage 1: Build frontend ──────────────────────────────
-FROM node:20-slim AS frontend-build
+FROM node:22-slim AS frontend-build
 
 WORKDIR /app/frontend
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 COPY frontend/package.json frontend/pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile || pnpm install
+RUN pnpm install --no-frozen-lockfile --ignore-scripts && pnpm rebuild esbuild
 
 COPY frontend/ .
 RUN pnpm build

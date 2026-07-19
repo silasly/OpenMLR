@@ -1,5 +1,16 @@
 const TOKEN_KEY = 'openmlr_token';
 
+function generateUUID(): string {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // Fallback for non-secure contexts (HTTP, non-localhost)
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+  });
+}
+
 function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY);
 }
@@ -71,7 +82,7 @@ export const api = {
 
   // Messages
   sendMessage: (message: string, mode?: string, mentions?: Array<{ type: string; value: string }>) =>
-    post('/api/message', { message, mode, request_id: crypto.randomUUID(), mentions: mentions?.length ? mentions : undefined }),
+    post('/api/message', { message, mode, request_id: generateUUID(), mentions: mentions?.length ? mentions : undefined }),
   submitAnswers: (answers: Record<string, string>) => post('/api/answers', { answers }),
   interrupt: () => post('/api/interrupt', {}),
   sendApproval: (approvals: Record<string, boolean>) => post('/api/approval', { approvals }),

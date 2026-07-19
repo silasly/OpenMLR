@@ -1,6 +1,6 @@
 # Default Agent Configuration
 # Leave model_name empty to auto-detect from configured API keys.
-model_name: ""
+model_name: "opencode-go/deepseek-v4-pro"
 max_iterations: 300
 stream: true
 yolo_mode: false
@@ -11,8 +11,8 @@ confirm_sandbox_creation: true
 confirm_destructive_ops: true
 
 # Leave empty to auto-detect
-research_model: ""
-title_model: ""
+research_model: "opencode-go/deepseek-v4-pro"
+title_model: "opencode-go/deepseek-v4-pro"
 
 # MCP servers (optional)
 mcpServers: {}
